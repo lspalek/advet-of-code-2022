@@ -13,4 +13,4 @@ This project holds solutions for competion [Advent of Code 2021](https://advento
 
 ### Code generator
 Code structure for next day can be created **automatically** via: [CodeGenerator.java](src/main/java/CodeGenerator.java).
-You can copy any day, just by changing `originalDayNumber` and `originalDayNumber`.
+You can copy any day, just by changing local variables `originalDayNumber` and `originalDayNumber`.
