@@ -1,18 +1,32 @@
 import java.util.Scanner;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class Day01 {
-//    private List<Integer> input = new ArrayList<>();
 
     public String calculate(String fileName) {
         Scanner scanner = new Scanner(this.getClass().getResourceAsStream(fileName));
-        Integer increaseCount = 0;
-        Integer previous = null;
-        while (scanner.hasNextInt()) {
-            var current = scanner.nextInt();
-            if (previous != null && previous < current) increaseCount++;
-            previous = current;
+        long sumOfCalories = 0;
+        long maxCarriedCalories = 0;
+        while (scanner.hasNextLine()) {
+            var current = scanner.nextLine();
+            if (StringUtils.isBlank(current)) {
+                if (maxCarriedCalories < sumOfCalories) {
+                    maxCarriedCalories = sumOfCalories;
+                }
+                sumOfCalories = 0;
+            } else {
+                sumOfCalories += Long.parseLong(current);
+
+            }
         }
-        return increaseCount + "";
+
+        if (maxCarriedCalories < sumOfCalories) {
+            maxCarriedCalories = sumOfCalories;
+        }
+
+
+        return maxCarriedCalories + "";
     }
 
 }

@@ -11,12 +11,12 @@ public class Day03bTest {
 
     @Test
     public void shouldRunOnExample() throws IOException, URISyntaxException {
-        then(program.calculate("day03b-example.txt")).isEqualTo("230");
+        then(program.calculate("day03b-example.txt")).isEqualTo("70");
     }
 
     @Test
     public void shouldRunOn1Sample() throws IOException, URISyntaxException {
-        then(program.calculate("day03b.txt")).isEqualTo("4432698");
+        then(program.calculate("day03b.txt")).isEqualTo("2342");
     }
 
 }

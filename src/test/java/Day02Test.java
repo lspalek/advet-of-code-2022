@@ -8,12 +8,12 @@ public class Day02Test {
 
     @Test
     public void shouldRunOnExample() {
-        then(program.calculate("day02-example.txt")).isEqualTo("150");
+        then(program.calculate("day02-example.txt")).isEqualTo("15");
     }
 
     @Test
     public void shouldRunOn1Sample() {
-        then(program.calculate("day02.txt")).isEqualTo("1459206");
+        then(program.calculate("day02.txt")).isEqualTo("15523");
     }
 
 }

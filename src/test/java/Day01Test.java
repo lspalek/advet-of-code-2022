@@ -1,5 +1,4 @@
 import static org.assertj.core.api.BDDAssertions.then;
-import static org.junit.Assert.*;
 
 import org.junit.Test;
 
@@ -9,12 +8,12 @@ public class Day01Test {
 
     @Test
     public void shouldRunOnExample() {
-        then(program.calculate("day01-example.txt")).isEqualTo("7");
+        then(program.calculate("day01-example.txt")).isEqualTo("24000");
     }
 
     @Test
     public void shouldRunOn1Sample() {
-        then(program.calculate("day01.txt")).isEqualTo("1665");
+        then(program.calculate("day01.txt")).isEqualTo("67633");
     }
 
 }

@@ -1,83 +1,52 @@
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.google.common.collect.ImmutableList;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
 
 public class Day03b {
 
-    public String calculate(String fileName) throws IOException, URISyntaxException {
-        List<String> numbers = ImmutableList.copyOf(Files.readAllLines(Path.of(this.getClass().getResource(fileName).toURI())));
+    public String calculate(String fileName) {
+        Scanner scanner = new Scanner(this.getClass().getResourceAsStream(fileName));
 
-        return calculateOxygenGeneratorRating(new ArrayList(numbers)) * calculateCo2(new ArrayList<>(numbers)) + "";
-    }
+        long totalPriority = 0;
 
-    private int calculateOxygenGeneratorRating(List<String> numbers) {
-        int index = 0;
-        do {
-            applyCalculationOxygenGeneratorRating(numbers, index);
-            index++;
-        } while (numbers.size() > 1 && index < numbers.get(0).length());
-        if (numbers.isEmpty()) throw new RuntimeException("not possible to calcualte OxygenGeneratorRating");
-
-        return Integer.parseInt(numbers.get(0), 2);
-    }
-
-    private void applyCalculationOxygenGeneratorRating(List<String> numbers, int currentBitIndex) {
-        var oneCount = calculateOnes(numbers, currentBitIndex);
-
-        if (oneCount * 2 >= numbers.size()) {
-            remove(numbers, currentBitIndex, '0');
-        } else {
-            remove(numbers, currentBitIndex, '1');
+        while (scanner.hasNextLine()) {
+            var commonItem = findCommonItem(scanner.nextLine(), scanner.nextLine(), scanner.nextLine());
+            totalPriority += calculatePriorirty(commonItem);
         }
+
+        return totalPriority + "";
     }
 
-    private int calculateCo2(List<String> numbers) {
-        int index = 0;
-        do {
-            applyCo2(numbers, index);
-            index++;
-        } while (numbers.size() > 1 && index < numbers.get(0).length());
-        if (numbers.isEmpty()) throw new RuntimeException("not possible to calcualte OxygenGeneratorRating");
-
-        return Integer.parseInt(numbers.get(0), 2);
-    }
-
-    private void applyCo2(List<String> numbers, int currentBitIndex) {
-        var oneCount = calculateOnes(numbers, currentBitIndex);
-
-        if (oneCount * 2 >= numbers.size()) {
-            remove(numbers, currentBitIndex, '1');
-        } else {
-            remove(numbers, currentBitIndex, '0');
+    private int calculatePriorirty(char item) {
+        if (item >= 'a' && item <= 'z') {
+            return ((int) item) - ((int) 'a') + 1;
         }
+
+        if (item >= 'A' && item <= 'Z') {
+            return ((int) item) - ((int) 'A') + 27;
+        }
+
+        throw new RuntimeException("wrong character: " + item);
     }
 
-    private void remove(List<String> numbers, int currentBitIndex, char currentBitValueToDelete) {
-        boolean somethingWasDeleted;
-        do {
-            somethingWasDeleted = false;
-            for (String s : numbers) {
-                if (s.charAt(currentBitIndex) == currentBitValueToDelete) {
-                    numbers.remove(s);
-                    somethingWasDeleted = true;
-                    break;
-                }
+    char findCommonItem(String s1, String s2, String s3) {
+        Set<Character> set1 = toSet(s1);
+        Set<Character> set2 = toSet(s2);
+        Set<Character> set3 = toSet(s3);
+        for (Character c : set1) {
+            if (set2.contains(c) && set3.contains(c)) {
+                return c;
             }
-        } while (somethingWasDeleted);
+        }
+        throw new RuntimeException("not found common item");
     }
 
-    private int calculateOnes(List<String> numbers, int currentBitIndex) {
-        var count = 0;
-        for (String s : numbers) {
-            if (s.charAt(currentBitIndex) == '1') count++;
+    private Set<Character> toSet(String s1) {
+        Set<Character> result = new HashSet<>();
+        for (char c : s1.toCharArray()) {
+            result.add(c);
         }
-
-        return count;
+        return result;
     }
 
 }

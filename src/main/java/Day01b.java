@@ -1,28 +1,35 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class Day01b {
-    private List<Integer> input = new ArrayList<>();
-
-    public static void main(String[] args) {
-        System.out.println(new Day01b().calculate("day01b-example.txt"));
-
-    }
-
     public String calculate(String fileName) {
         Scanner scanner = new Scanner(this.getClass().getResourceAsStream(fileName));
-        Integer increaseCount = 0;
-        input.add(scanner.nextInt());
-        input.add(scanner.nextInt());
-        input.add(scanner.nextInt());
-        while (scanner.hasNextInt()) {
-            var current = scanner.nextInt();
-            if (input.get(0) < current) increaseCount++;
-            input.add(current);
-            input.remove(0);
+
+        long sumOfCalories = 0;
+        List<Long> elfsCalories = new ArrayList<>();
+
+        while (scanner.hasNextLine()) {
+            var current = scanner.nextLine();
+            if (StringUtils.isBlank(current)) {
+                elfsCalories.add(sumOfCalories);
+                sumOfCalories = 0;
+            } else {
+                sumOfCalories += Long.parseLong(current);
+            }
         }
-        return increaseCount + "";
+        elfsCalories.add(sumOfCalories);
+
+        long result = elfsCalories.stream()
+                .sorted(Collections.reverseOrder())
+                .limit(3)
+                .reduce(0l, (a, b) -> a + b);
+
+
+        return result + "";
     }
 
 }
