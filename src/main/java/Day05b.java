@@ -20,11 +20,7 @@ public class Day05b {
             Line line = new Line(twoPoints);
             lines.add(line);
 
-            maxX = Math.max(maxX, line.leftTop.x);
-            maxX = Math.max(maxX, line.rightBottom.x);
-
-            maxY = Math.max(maxY, line.leftTop.y);
-            maxY = Math.max(maxY, line.rightBottom.y);
+            findMaxXY(line);
         }
 
         maxX++;
@@ -36,6 +32,14 @@ public class Day05b {
         }
 
         return findPointsWhereLinesCross() + "";
+    }
+
+    private void findMaxXY(Line line) {
+        maxX = Math.max(maxX, line.leftTop.x);
+        maxX = Math.max(maxX, line.rightBottom.x);
+
+        maxY = Math.max(maxY, line.leftTop.y);
+        maxY = Math.max(maxY, line.rightBottom.y);
     }
 
     private int findPointsWhereLinesCross() {
@@ -84,10 +88,14 @@ public class Day05b {
             leftTop = new Point(Integer.valueOf(twoPoints[0]), Integer.valueOf(twoPoints[1]));
             rightBottom = new Point(Integer.valueOf(twoPoints[2]), Integer.valueOf(twoPoints[3]));
             if (leftTop.x > rightBottom.x || (leftTop.x == rightBottom.x && leftTop.y > rightBottom.y)) {
-                var tmp = leftTop;
-                leftTop = rightBottom;
-                rightBottom = tmp;
+                swapVariables();
             }
+        }
+
+        private void swapVariables() {
+            var tmp = leftTop;
+            leftTop = rightBottom;
+            rightBottom = tmp;
         }
     }
 
