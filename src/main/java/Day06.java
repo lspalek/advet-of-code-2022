@@ -12,12 +12,12 @@ public class Day06 {
         for (int i = 3; i < s.length(); i++) {
             differentCharacters.clear();
             differentCharacters.add(s.charAt(i));
-            differentCharacters.add(s.charAt(i-1));
-            differentCharacters.add(s.charAt(i-2));
-            differentCharacters.add(s.charAt(i-3));
+            differentCharacters.add(s.charAt(i - 1));
+            differentCharacters.add(s.charAt(i - 2));
+            differentCharacters.add(s.charAt(i - 3));
 
             if (differentCharacters.size() == 4) {
-                return i+1+"";
+                return i + 1 + "";
             }
         }
         return 0 + "";
